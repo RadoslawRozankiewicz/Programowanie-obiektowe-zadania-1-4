@@ -1,0 +1,64 @@
+using System;
+
+namespace Osoba
+{
+    public class Osoba
+    {
+        public string imie;
+        public string nazwisko;
+        public DateTime? dataUrodzenia = new DateTime();
+        public DateTime? dataSmierci = new DateTime();
+        public string ImieNazwisko
+        {
+            get { return imie + " " + nazwisko; }
+            set 
+            {
+                if (String.IsNullOrEmpty(nazwisko))
+                {
+                    imie = value;
+                }
+                else
+                {
+                    imie = imie + " " + nazwisko;
+                    imie = value;
+                }
+            }
+        }
+        public string Imie
+        {
+            get { return imie; }
+            set
+            {
+                    try
+                    {
+                    String.IsNullOrEmpty(imie);
+                    }
+                    catch (Exception e)
+                    {
+                    Console.WriteLine($"Value is null or empty. Message: {e.Message}");
+                }
+            }
+        }
+
+        public TimeSpan? Wiek
+        {
+            get 
+            {
+                if (!dataSmierci.HasValue && !dataUrodzenia.HasValue)
+                {
+                    return null;
+                }
+                else if (!dataSmierci.HasValue && dataUrodzenia.HasValue)
+                {
+                    return DateTime.Now - dataUrodzenia;
+                }
+                else
+                {
+                    return dataSmierci - dataUrodzenia;
+                }
+            }
+        }
+        public Osoba(string ImieNazwisko)
+        { }
+    }
+}
