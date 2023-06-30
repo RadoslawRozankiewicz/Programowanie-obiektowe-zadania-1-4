@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+
+namespace Zadanie2
+{
+    class Prostokat
+    {
+		static void main (string[] args)
+        {
+			static IDictionary<char, decimal> wysokoscArkusza0 = new Dictionary<char, decimal>();
+			wysokoscArkusza0.Add('A',1189);
+			wysokoscArkusza0.Add('B',1414);
+			wysokoscArkusza0.Add('C',1297);
+        }
+        // Pola
+        private double bokA;
+        private double bokB;
+
+        //Właściwości
+        public double BokA
+        {
+            get { return bokA; }
+            set
+            {
+                if (bokA <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bokA), "Wartość nie może być mniejsza lub równa 0!");
+                }
+                else
+                {
+                    bokA = value;
+                }
+            }
+        }
+        public double BokB
+        {
+            get { return bokB; }
+            set
+            {
+                if (bokB <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bokB), "Wartość nie może być mniejsza lub równa 0!");
+                }
+                else
+                {
+                    bokB = value;
+                }
+            }
+        }
+        //Konstruktor
+        Prostokat (double bokA, double bokB)
+        {
+            double pole = bokA * bokB;
+        }
+        //Metoda
+        static Prostokat ArkuszPapieru(string x)
+        {
+        }
+    }
+}
