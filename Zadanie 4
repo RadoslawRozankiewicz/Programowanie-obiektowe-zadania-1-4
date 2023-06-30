@@ -1,0 +1,227 @@
+using System;
+using System.Collections.Generic;
+
+namespace Zadanie4
+{
+    public class Slownik
+    {
+        public Dictionary<int, int> StawkiVAT { get; } = new Dictionary<int, int>()
+        {
+            { 1, 23 },
+            { 2, 8 },
+            { 3, 5 },
+            { 4, 0 }
+        };
+        public Dictionary<int, string> Alerg { get; } = new Dictionary<int, string>()
+        {
+            { 1, "Orzeszki ziemne" },
+            { 2, "Orzechy inne" },
+            { 3, "Soja" },
+            { 4, "Gorczyca" },
+            { 5, "Jaja" },
+            { 6, "Łubin" },
+            { 7, "Mleko" },
+            { 8, "Ryby" },
+            { 9, "Zboża zawierające gluten" },
+            { 10, "Sezam" },
+            { 11, "Seler" },
+            { 12, "Dwutlenek siarki" },
+            { 13, "Mięczaki" },
+            { 14, "Skorupiaki" }
+        };
+    }
+    class Produkt
+    {
+
+        string Nazwa
+        {
+            get
+            {
+                return Nazwa;
+            }
+            set
+            {
+                Nazwa = value;
+            }
+        }
+        decimal CenaNetto
+        {
+            get
+            {
+                return CenaNetto;
+            }
+            set
+            {
+                if (CenaNetto < 0)
+                {
+                    throw new ArgumentOutOfRangeException("Cena nie może być ujemna!");
+                }
+                else CenaNetto = value;
+            }
+        }
+        int KategoriaVAT
+        {
+            get
+            {
+                Slownik s = new Slownik();
+                foreach (var i in s.StawkiVAT)
+                {
+                    Console.WriteLine(i.Key);
+                    Console.WriteLine(i.Value);
+                    return i.Value;
+                }
+                return 23; // Default
+            }
+        }
+        decimal CenaBrutto
+        {
+            get
+            {
+                decimal stawka = KategoriaVAT / 100 + 1; // 23 = 1,23, itd
+                return CenaNetto * stawka; 
+            }
+        }
+        string KrajPochodzenia
+        {
+            get
+            {
+                return KrajPochodzenia;
+            }
+            set
+            {
+                if (KrajPochodzenia == "")
+                {
+                    KrajPochodzenia = "Nieznany";
+                    throw new NotImplementedException();
+                }
+                else KrajPochodzenia = value;
+            }
+        }
+    }
+    class ProduktSpozywczy:Produkt
+    {
+        int KategoriaVAT
+        {
+            get
+            {
+                return 0; // Default
+            }
+        }
+        uint Kalorie
+        {
+            get
+            {
+                return Kalorie;
+            }
+            set
+            {
+                Kalorie = value;
+            }
+        }
+        HashSet<string> Alergeny
+        {
+            get
+            {
+                Slownik s = new Slownik();
+                foreach (var i in s.Alerg)
+                {
+                    Console.WriteLine(i.Key);
+                    Console.WriteLine(i.Value);
+                    Alergeny.Add(i.Value);
+                }
+                return Alergeny;
+            }
+        }
+    }
+    class ProduktSpozywczyNaWage:ProduktSpozywczy
+    {
+    }
+    class ProduktSpozywczyPaczka:ProduktSpozywczy
+    {
+        decimal Waga
+        {
+            get { return Waga; }
+            set
+            {
+                if (Waga <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(Waga), "Wartość nie może być mniejsza lub równa 0!");
+                }
+                else
+                {
+                    Waga = value;
+                }
+            }
+        }
+    }
+    class ProduktSpozywczyNapoj:ProduktSpozywczyPaczka
+    {
+        uint Objetosc
+        {
+            get
+            {
+                return Objetosc;
+            }
+            set
+            {
+                Objetosc = value;
+            }
+        }
+    }
+    class Wielopak:Produkt
+    {
+        Produkt Produkt()
+        {
+            Produkt p = new Produkt();
+            return p;
+        }
+        ushort Ilosc
+        {
+            get
+            {
+                return Ilosc;
+            }
+            set
+            {
+                Ilosc = value;
+            }
+        }
+        decimal CenaNetto
+        {
+            get
+            {
+                return CenaNetto * Ilosc;
+            }
+            set
+            {
+                if (CenaNetto < 0)
+                {
+                    throw new ArgumentOutOfRangeException("Cena nie może być ujemna!");
+                }
+                else CenaNetto = value;
+            }
+        }
+        int KategoriaVAT
+        {
+            get
+            {
+                Slownik s = new Slownik();
+                foreach (var i in s.StawkiVAT)
+                {
+                    Console.WriteLine(i.Key);
+                    Console.WriteLine(i.Value);
+                    return i.Value;
+                }
+                return 23; // Default
+            }
+        }
+        decimal CenaBrutto
+        {
+            get
+            {
+                decimal stawka = KategoriaVAT / 100 + 1; // 23 = 1,23, itd
+                return CenaNetto * stawka;
+            }
+        }
+    }
+}
