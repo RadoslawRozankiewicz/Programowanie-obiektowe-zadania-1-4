@@ -1,0 +1,90 @@
+using System;
+
+namespace Zadanie3
+{
+    class Wektor
+    {
+        //Pola
+        double[] wspolrzedne;
+        //Właściwości
+        string Dlugosc
+        {
+            get;
+        }
+        byte Wymiar
+        {
+            get;
+        }
+        //Indeksator
+        byte this[byte index]
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                index = value;
+            }
+        }
+        //Operatory
+        public static Wektor operator +(Wektor x, Wektor y)
+        {
+            return new Wektor(x.Wymiar + y.Wymiar);
+        }
+        public static Wektor operator -(Wektor x, Wektor y)
+        {
+            return new Wektor(x.Wymiar - y.Wymiar);
+        }
+        public static Wektor operator *(Wektor x, Wektor y)
+        {
+            return new Wektor(x.Wymiar * y.Wymiar);
+        }
+        public static Wektor operator *(Wektor x, double y)
+        {
+            return new Wektor(x.Wymiar * y);
+        }
+        public static Wektor operator *(double x, Wektor y)
+        {
+            return new Wektor(x * y.Wymiar);
+        }
+        public static Wektor operator /(Wektor x, double y)
+        {
+            return new Wektor(x.Wymiar / y);
+        }
+        public static Wektor operator /(double x, Wektor y)
+        {
+            return new Wektor(x / y.Wymiar);
+        }
+        //Konstruktory
+        Wektor (byte wymiar)
+        {
+            byte Wymiar = wymiar;
+        }
+        Wektor (params double[] wspolrzedne)
+        {
+
+        }
+        //Metody
+        static Wektor IloczynSkalarny(Wektor V, Wektor W)
+        {
+            Wektor iloczyn = V * W;
+            if (V != W)
+            {
+                throw new ArgumentOutOfRangeException("Wektory nie są identyczne!");
+            }
+            else
+                return iloczyn;
+        }
+        Wektor Suma(params Wektor[] wektory)
+        {
+            Wektor suma = wektory[0] + wektory[1];
+            if (wektory[0] != wektory[1])
+            {
+                throw new ArgumentOutOfRangeException("Wektory nie są identyczne!");
+            }
+            else
+                return suma;
+        }
+    }
+}
